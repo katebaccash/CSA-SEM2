@@ -144,6 +144,146 @@ public class Picture extends SimplePicture
 		}
   }
   
+	/** To pixelate by dividing area into size x size.
+	* @param size Side length of square area to pixelate.
+	*/
+	public void pixelate(int size) 
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		for(int r = 0; r < pixels.length; r += size)
+		{
+			for(int c = 0; c < pixels[r].length; c += size)
+			{
+				int sumR = 0;
+				int sumG = 0;
+				int sumB = 0;
+				int divide = 0;
+				for(int squareR = 0; squareR < size; squareR++)
+				{
+					for(int squareC = 0; squareC < size; squareC++)
+					{
+						if(squareR+r < pixels.length && squareC+c < pixels[r].length)
+						{
+							divide++;
+							sumR += pixels[squareR+r][squareC+c].getRed();
+							sumG += pixels[squareR+r][squareC+c].getGreen();
+							sumB += pixels[squareR+r][squareC+c].getBlue();
+						}
+					}
+				}
+				int averageR = sumR/divide;
+				int averageG = sumG/divide;
+				int averageB = sumB/divide;
+				for(int squareR = 0; squareR < size; squareR++)
+				{
+					for(int squareC = 0; squareC < size; squareC++)
+					{
+						if(squareR+r < pixels.length && squareC+c < pixels[r].length)
+						{
+							pixels[squareR+r][squareC+c].setRed(averageR);
+							pixels[squareR+r][squareC+c].setGreen(averageG);
+							pixels[squareR+r][squareC+c].setBlue(averageB);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	/** Method that blurs the picture
+	* 	@param size Blur size, greater is more blur
+	* 	@return Blurred picture
+	*/
+	public Picture blur(int size)
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		Picture result = new Picture(pixels.length, pixels[0].length);
+		Pixel[][] resultPixels = result.getPixels2D();
+		
+		for(int r = 0; r < pixels.length; r ++)
+		{
+			for(int c = 0; c < pixels[r].length; c ++)
+			{
+				int sumR = 0;
+				int sumG = 0;
+				int sumB = 0;
+				int divide = 0;
+				for(int squareR = 0; squareR < size; squareR++)
+				{
+					for(int squareC = 0; squareC < size; squareC++)
+					{
+						if(squareR+r < pixels.length && squareC+c < pixels[r].length)
+						{
+							divide++;
+							sumR += pixels[squareR+r][squareC+c].getRed();
+							sumG += pixels[squareR+r][squareC+c].getGreen();
+							sumB += pixels[squareR+r][squareC+c].getBlue();
+						}
+					}
+				}
+				int averageR = sumR/divide;
+				int averageG = sumG/divide;
+				int averageB = sumB/divide;
+				
+				resultPixels[r][c].setRed(averageR);
+				resultPixels[r][c].setGreen(averageG);
+				resultPixels[r][c].setBlue(averageB);
+			}
+		}
+		return result;
+	}
+	
+	/** Method that enhances a picture by getting average Color around
+	* a pixel then applies the following formula:
+	*
+	* pixelColor <- 2 * currentValue - averageValue
+	*
+	* size is the area to sample for blur.
+	*
+	* @param size Larger means more area to average around pixel
+	* and longer compute time.
+	* @return enhanced picture
+	*/
+	public Picture enhance(int size)
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		Picture result = new Picture(pixels.length, pixels[0].length);
+		Pixel[][] resultPixels = result.getPixels2D();
+				
+		for(int r = 0; r < pixels.length; r ++)
+		{
+			for(int c = 0; c < pixels[r].length; c ++)
+			{
+				int sumR = 0;
+				int sumG = 0;
+				int sumB = 0;
+				int divide = 0;
+				for(int squareR = 0; squareR < size; squareR++)
+				{
+					for(int squareC = 0; squareC < size; squareC++)
+					{
+						if(squareR+r < pixels.length && squareC+c < pixels[r].length)
+						{
+							divide++;
+							sumR += pixels[squareR+r][squareC+c].getRed();
+							sumG += pixels[squareR+r][squareC+c].getGreen();
+							sumB += pixels[squareR+r][squareC+c].getBlue();
+						}
+					}
+				}
+				int averageR = sumR/divide;
+				int averageG = sumG/divide;
+				int averageB = sumB/divide;
+				
+				resultPixels[r][c].setRed(2*pixels[r][c].getRed() - averageR);
+				resultPixels[r][c].setGreen(2*pixels[r][c].getGreen() - averageG);
+				resultPixels[r][c].setBlue(2*pixels[r][c].getBlue() - averageB);
+			}
+		}
+		
+		return result;
+	}
+	
   /** Method that mirrors the picture around a 
     * vertical mirror in the center of the picture
     * from left to right */

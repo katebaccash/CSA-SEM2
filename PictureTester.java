@@ -44,7 +44,7 @@ public class PictureTester
     temple.explore();
   }
   
-  /** Method to test keepOnlyBlue */
+  /** Method to test grayscale */
   public static void testGrayscale()
   {
     Picture temple = new Picture("images/temple.jpg");
@@ -53,13 +53,37 @@ public class PictureTester
     temple.explore();
   }
   
-  /** Method to test keepOnlyBlue */
+  /** Method to test negate */
   public static void testNegate()
   {
     Picture temple = new Picture("images/temple.jpg");
     temple.explore();
     temple.negate();
     temple.explore();
+  }
+  /** Method to test pixelate */
+  public static void testPixelate()
+  {
+    Picture temple = new Picture("images/temple.jpg");
+    temple.explore();
+    temple.pixelate(15);
+    temple.explore();
+  }
+   /** Method to test blur */
+  public static void testBlur()
+  {
+    Picture temple = new Picture("images/temple.jpg");
+    temple.explore();
+    Picture result = temple.blur(13);
+    result.explore();
+  }
+  /** Method to test enhance */
+  public static void testEnhance()
+  {
+    Picture temple = new Picture("images/water.jpg");
+    temple.explore();
+    Picture result = temple.enhance(9);
+    result.explore();
   }
   
   /** Method to test the collage method */
@@ -90,7 +114,10 @@ public class PictureTester
     //testKeepOnlyRed();
     //testKeepOnlyGreen();
     //testNegate();
-    testGrayscale();
+    //testGrayscale();
+	//testPixelate();
+	//testBlur();
+	testEnhance();
     //testFixUnderwater();
     //testMirrorVertical();
     //testMirrorTemple();

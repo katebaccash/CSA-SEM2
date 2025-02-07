@@ -98,10 +98,10 @@ public class Picture extends SimplePicture
     }
   }
   
-  /** Method to set green and red to 0, keeping only blue for each pixel */
-  public void keepOnlyBlue()
-  {
-	  Pixel[][] pixels = this.getPixels2D();
+	/** Method to set green and red to 0, keeping only blue for each pixel */
+	public void keepOnlyBlue()
+		{
+		Pixel[][] pixels = this.getPixels2D();
 		for (Pixel[] rowArray : pixels)
 		{
 		  for (Pixel pixelObj : rowArray)
@@ -110,7 +110,7 @@ public class Picture extends SimplePicture
 			pixelObj.setGreen(0);
 		  }
 		}
-  }
+	}
   
   /** Method to make the picture black and white */
   public void grayscale()
@@ -281,6 +281,58 @@ public class Picture extends SimplePicture
 			}
 		}
 		
+		return result;
+	}
+	/**
+	 * 	Method that swaps the left half and right half of picture
+	 * 	@return		the new picture with swapped sides
+	 */
+	public Picture swapLeftRight()
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		Picture result = new Picture(pixels.length, pixels[0].length);
+		Pixel[][] resultPixels = result.getPixels2D();
+		
+		for(int r = 0; r < pixels.length; r++)
+		{
+			for(int c = 0; c < pixels[r].length; c++)
+			{
+				resultPixels[r][c].setColor(pixels[r][
+					(pixels[r][c].getCol() + pixels[r].length / 2)
+					% pixels[r].length].getColor());
+			}
+		}
+		return result;
+	}
+	
+	/** Method to shift sections of the picture to the right. Each section
+	 * 	is a given number of rows.
+	 * 
+	* @param shiftCount The number of pixels to shift to the right
+	* @param steps The number of steps
+	* @return The picture with pixels shifted in stair steps
+	*/
+	public Picture stairStep(int shiftCount, int steps)
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		Picture result = new Picture(pixels.length, pixels[0].length);
+		Pixel[][] resultPixels = result.getPixels2D();
+		
+		int shift = 0;
+		for(int r = 0; r < pixels.length; r++)
+		{
+			for(int c = 0; c < pixels[r].length; c++)
+			{
+				if(c - shift >= 0)
+					resultPixels[r][c].setColor(pixels[r]
+						[(c - shift)].getColor());
+				else 
+					resultPixels[r][c].setColor(pixels[r]
+						[pixels[r].length - Math.abs(c - shift)].getColor());
+			}
+			if(r % (pixels.length / steps) == 0)
+				shift += shiftCount;
+		}
 		return result;
 	}
 	

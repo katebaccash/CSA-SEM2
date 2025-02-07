@@ -86,6 +86,24 @@ public class PictureTester
     result.explore();
   }
   
+  /** Method to test swapLeftRight */
+  public static void testSwapLeftRight()
+  {
+    Picture temple = new Picture("images/beach.jpg");
+    temple.explore();
+    Picture result = temple.swapLeftRight();
+    result.explore();
+  }
+  
+  /** Method to test stairStep */
+  public static void testStairStep()
+  {
+    Picture temple = new Picture("images/beach.jpg");
+    temple.explore();
+    Picture result = temple.stairStep(15, 7);
+    result.explore();
+  }
+  
   /** Method to test the collage method */
   public static void testCollage()
   {
@@ -117,7 +135,9 @@ public class PictureTester
     //testGrayscale();
 	//testPixelate();
 	//testBlur();
-	testEnhance();
+	//testEnhance();
+	//testSwapLeftRight();
+	testStairStep();
     //testFixUnderwater();
     //testMirrorVertical();
     //testMirrorTemple();

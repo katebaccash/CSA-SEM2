@@ -44,6 +44,24 @@ public class PictureTester
     temple.explore();
   }
   
+  /** Method to test keepOnlyGreen */
+  public static void testKeepOnlyGreen()
+  {
+    Picture temple = new Picture("images/temple.jpg");
+    temple.explore();
+    temple.keepOnlyGreen();
+    temple.explore();
+  }
+  
+  /** Method to test keepOnlyRed */
+  public static void testKeepOnlyRed()
+  {
+    Picture temple = new Picture("images/temple.jpg");
+    temple.explore();
+    temple.keepOnlyRed();
+    temple.explore();
+  }
+  
   /** Method to test grayscale */
   public static void testGrayscale()
   {
@@ -137,7 +155,7 @@ public class PictureTester
 	//testBlur();
 	//testEnhance();
 	//testSwapLeftRight();
-	testStairStep();
+	//testStairStep();
     //testFixUnderwater();
     //testMirrorVertical();
     //testMirrorTemple();

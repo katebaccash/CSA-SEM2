@@ -100,7 +100,7 @@ public class Picture extends SimplePicture
   
 	/** Method to set green and red to 0, keeping only blue for each pixel */
 	public void keepOnlyBlue()
-		{
+	{
 		Pixel[][] pixels = this.getPixels2D();
 		for (Pixel[] rowArray : pixels)
 		{
@@ -108,6 +108,34 @@ public class Picture extends SimplePicture
 		  {
 			pixelObj.setRed(0);
 			pixelObj.setGreen(0);
+		  }
+		}
+	}
+	
+	/** Method to set green and blue to 0, keeping only red for each pixel */
+	public void keepOnlyRed()
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		for (Pixel[] rowArray : pixels)
+		{
+		  for (Pixel pixelObj : rowArray)
+		  {
+			pixelObj.setBlue(0);
+			pixelObj.setGreen(0);
+		  }
+		}
+	}
+	
+	/** Method to set blue and red to 0, keeping only green for each pixel */
+	public void keepOnlyGreen()
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		for (Pixel[] rowArray : pixels)
+		{
+		  for (Pixel pixelObj : rowArray)
+		  {
+			pixelObj.setRed(0);
+			pixelObj.setBlue(0);
 		  }
 		}
 	}

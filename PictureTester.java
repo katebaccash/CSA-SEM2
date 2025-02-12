@@ -134,9 +134,20 @@ public class PictureTester
   public static void testEdgeDetection()
   {
     Picture swan = new Picture("images/swan.jpg");
-    swan.edgeDetection(10);
+    swan = swan.edgeDetection(10);
     swan.explore();
   }
+  
+	/** Method to test greenScreen */
+	public static void testGreenScreen()
+	{
+		// choose any picture to start since it will *not* be used
+		Picture pic = new Picture("images/beach.jpg");
+		Picture gScreen = pic.greenScreen();
+		gScreen.explore();
+	}
+	
+	
   
   /** Main method for testing.  Every class can have a main
     * method in Java */
@@ -156,6 +167,8 @@ public class PictureTester
 	//testEnhance();
 	//testSwapLeftRight();
 	//testStairStep();
+	//testEdgeDetection();
+	testGreenScreen();
     //testFixUnderwater();
     //testMirrorVertical();
     //testMirrorTemple();

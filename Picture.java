@@ -384,6 +384,75 @@ public class Picture extends SimplePicture
     } 
   }
   
+	/** Method that creates an edge detected black/white picture
+	* @param threshold threshold as determined by Pixel’s colorDistance method
+	* @return edge detected picture
+	*/
+	public Picture edgeDetection(int threshold)
+	{
+		Pixel[][] pixels = this.getPixels2D();
+		Picture result = new Picture(pixels.length, pixels[0].length);
+		Pixel[][] resultPixels = result.getPixels2D();
+		
+		for(int r = 0; r < pixels.length; r++)
+		{
+			for(int c = 0; c < pixels[r].length; c++)
+			{
+				if(r + 1 < pixels.length  &&
+					pixels[r][c].colorDistance(pixels[r+1][c].getColor()) > threshold)
+					resultPixels[r][c].setColor(new Color(0, 0, 0));
+				else
+					resultPixels[r][c].setColor(new Color(255, 255, 255));
+			}
+		}
+		return result;
+	}
+	
+	/** Method that creates a green screen picture
+	* @return green screen picture
+	*/
+	public Picture greenScreen()
+	{	
+		// Get background picture
+		Picture bkgnd = new Picture("greenScreenImages/IndoorHouseLibraryBackground.jpg");
+		Pixel[][] bkgndPixels = bkgnd.getPixels2D();
+		// Get cat picture
+		Picture cat = new Picture("greenScreenImages/kitten1GreenScreen.jpg");
+		Pixel[][] catPixels = cat.getPixels2D();
+		// Get mouse picture
+		Picture mouse = new Picture("greenScreenImages/mouse1GreenScreen.jpg");
+		Pixel[][] mousePixels = mouse.getPixels2D();
+		
+		Picture result = new Picture(bkgndPixels.length, bkgndPixels[0].length);
+		Pixel[][] resultPixels = result.getPixels2D();
+		
+		for(int r = 0; r < bkgndPixels.length; r++)
+		{
+			for(int c = 0; c < bkgndPixels[r].length; c++)
+			{
+				if( !(r > 371 && r < 395 && c > 375 && c < 415) &&
+					mousePixels[(int)(r*6.25)][(int)(c*6.25)]
+					.colorDistance(new Color(0, 255, 255)) != 0 )
+					resultPixels[r][c].setColor(bkgndPixels[r][c].getColor());
+				//else if( !(r > 200 && r < 300 && c > 300 && c < 300) )
+				//	resultPixels[r][c].setColor(catPixels[0][0].getColor());
+				else 
+					resultPixels[r][c].setColor(mousePixels[0][0].getColor());
+			}
+		}
+		return result;
+	}
+	
+	/**
+	* Rotate image in radians, clean up "drop-out" pixels
+	* @param angle angle of rotation in radians
+	* @return Picture that is rotated
+	*/
+	/*public Picture rotate(double angle)
+	{
+		
+	}*/
+  
   /** Mirror just part of a picture of a temple */
   public void mirrorTemple()
   {
@@ -460,7 +529,7 @@ public class Picture extends SimplePicture
   /** Method to show large changes in color 
     * @param edgeDist the distance for finding edges
     */
-  public void edgeDetection(int edgeDist)
+  public void edgeDetection1(int edgeDist)
   {
     Pixel leftPixel = null;
     Pixel rightPixel = null;
